@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Павел Куртасов](https://up.htmlacademy.ru/javascript/20/user/1145825).
-* Наставник: `Неизвестно`.
+* Наставник: [Антон Попов](https://github.com/ademaro).
 
 ---
 
