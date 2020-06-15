@@ -44,18 +44,18 @@ var PHOTOS = [
 ];
 var PIN_OFFSET_X = 50;
 var PIN_OFFSET_Y = 70;
-//Удаляем класс у карты для её отображения.
+// Удаляем класс у карты для её отображения.
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
 /**
  * @param {number} arr - массив
  * @length - длинна массива
+ * @return - возвращает случайную строку из массива
  */
 var getRandomElementFromArray = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 };
-
-//Блок определения координат
+// Блок определения координат
 /**
  * Функция выбора рандомного числа в диапозоне, где максимум и минимум включены
  * @param {number} min - минимальное число диапозона
@@ -79,7 +79,7 @@ var getListOfOffers = function () {
   return offers;
 };
 /**
- *Генерация массива моков из объектов
+ * Генерация массива моков из объектов
  * @param {number} offerNumber - количество элеметов массива
  * @return {Array} - Готовый массив с данными для пина
  */
@@ -113,6 +113,7 @@ var createOffer = function (offerNumber) {
 /**
  * задаем расположение пина(ов)
  * @param {Array} offer - массив с данными
+ * @return - возвращает готовый пин
  */
 var createPin = function (offer) {
   var pinTemplate = document.querySelector('#pin')
