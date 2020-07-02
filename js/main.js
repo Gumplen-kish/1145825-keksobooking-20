@@ -166,7 +166,10 @@ var generateCard = function(card) {
   cardElement.querySelector('.popup__description').textContent = card.offer.description;
   return cardElement;
 };
-
+/**
+ * Добавляем информацию для карт
+ * @param {*} offers - массив с данными пинов
+ */
 var pushCard = function(offers) {
   var fragment = document.createDocumentFragment();
   var listElement = document.querySelector('.map__pins');
