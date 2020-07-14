@@ -32,7 +32,7 @@ var pushCard = function(offer) {
   listElement.appendChild(generateCard(offer));
 };
 window.cards = {
-  create: pushCard(offers[0]),
+  create: pushCard,
   create: generateCard
 }
 })();

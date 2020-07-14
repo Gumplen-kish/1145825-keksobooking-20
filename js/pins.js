@@ -15,7 +15,7 @@ var Guests = {
   MIN: 1,
   MAX: 10
 };
-var Times = ['12:00', '13:00', '14:00'];
+var times = ['12:00', '13:00', '14:00'];
 var Features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var Titles = [
   'Хорошая квартира',
@@ -101,8 +101,8 @@ var createOffer = function (offerNumber) {
       type: getRandomElementFromArray(Types),
       rooms: getRandomIntInclusive(Rooms.MIN, Rooms.MAX),
       guests: getRandomIntInclusive(Guests.MIN, Guests.MAX),
-      checkin: getRandomElementFromArray(Times),
-      checkout: getRandomElementFromArray(Times),
+      checkin: getRandomElementFromArray(times),
+      checkout: getRandomElementFromArray(times),
       features: getRandomElementFromArray(Features),
       description: getRandomElementFromArray(Description),
       photos: getRandomElementFromArray(Photos)
@@ -144,6 +144,7 @@ var renderPins = function (offers) {
   pins.appendChild(fragment);
 };
 window.pins = {
-  create: renderPins(offers)
+  create: renderPins,
+  getListOfOffers: getListOfOffers
 }
 })();

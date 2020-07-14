@@ -6,28 +6,30 @@
   var MAJOR_FORM = document.querySelector('.ad-form');
   /**
    *
-   * @param {Object} occasion - Обэъект произошедшего события
+   * @param {Object} evt - Обэъект произошедшего события
    */
-  var onPressMouseLeft = function(occasion) {
-    if (occasion.which == 1) {
-      activeMap();
+  var onPressMouseLeft = function(evt) {
+    var evt = addEventListener;
+    if (evt.button === 0) {
+      activeMap(true);
     }
   }
   /**
    *
-   * @param {Object} occasion - Обэъект произошедшего события
+   * @param {Object} evt - Обэъект произошедшего события
    */
-  var onPressKeyboardEnter = function(occasion) {
-    if (occasion.which == 13) {
-      activeMap();
+  var onPressKeyboardEnter = function(evt) {
+    var evt = addEventListener;
+    if (evt.key === 13) {
+      activeMap(true);
     }
   }
   /**
    * Функция активации карты
    */
   var activeMap = function() {
-    window.pins.create();
-    window.cards.create();
+    window.pins.create(offers);
+    window.cards.pushCard(offers[0]);
     window.form.activate(MAJOR_FORM,true);
     window.form.activate(FILTERS,true);
     MAJOR_FORM.classList.remove('ad-form--disabled');
