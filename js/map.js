@@ -40,3 +40,4 @@
   PIN_MAIN.addEventListener('mousedown', onPressMouseLeft);
   PIN_MAIN.addEventListener('keydown', onPressKeyboardEnter);
 })();
+
