@@ -144,7 +144,6 @@ var renderPins = function (offers) {
   pins.appendChild(fragment);
 };
 window.pins = {
-  create: renderPins(offers),
-  getListOfOffers: getListOfOffers
+  create: renderPins(offers)
 }
 })();

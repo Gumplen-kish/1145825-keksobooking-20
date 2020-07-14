@@ -10,7 +10,7 @@
    */
   var onPressMouseLeft = function(occasion) {
     if (occasion.which == 1) {
-      activeMap()
+      activeMap();
     }
   }
   /**
@@ -19,7 +19,7 @@
    */
   var onPressKeyboardEnter = function(occasion) {
     if (occasion.which == 13) {
-      activeMap()
+      activeMap();
     }
   }
   /**
