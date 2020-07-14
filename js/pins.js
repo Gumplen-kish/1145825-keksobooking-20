@@ -1,6 +1,7 @@
 'use strict';
-var ADSAMOUNT = 8;
-var TYPES = {
+(function () {
+var Adsamount = 8;
+var Types = {
   PALACE: 'Дворец',
   FLAT: 'Квартира',
   HOUSE: 'Дом',
@@ -14,9 +15,9 @@ var Guests = {
   MIN: 1,
   MAX: 10
 };
-var TIMES = ['12:00', '13:00', '14:00'];
-var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var TITLES = [
+var Times = ['12:00', '13:00', '14:00'];
+var Features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var Titles = [
   'Хорошая квартира',
   'Хижина, как у лесника',
   'Квартира, как у Шейха',
@@ -26,7 +27,7 @@ var TITLES = [
   'Квартира мечты',
   'Квартира - на сутки пойдет'
 ];
-var DESCRIPTION = [
+var Description = [
   'Единственный минус - капает кран',
   'Холодильник с замком, а так всё хорошо',
   'Есть лежак из досок',
@@ -42,7 +43,7 @@ var MapCoordinates = {
   MIN_Y: 130,
   MAX_Y: 630
 };
-var PHOTOS = [
+var Photos = [
   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
@@ -71,12 +72,12 @@ var getRandomIntInclusive = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 /**
- * @param {number} ADSAMOUNT - Количество аватаров и максимальное количество пинов
+ * @param {number} Adsamount - Количество аватаров и максимальное количество пинов
  * @return {number} - Возвращает рандомное число
  */
 var getListOfOffers = function () {
   var offers = [];
-  for (var i = 0; i < ADSAMOUNT; i++) {
+  for (var i = 0; i < Adsamount; i++) {
     offers[i] = createOffer(i + 1);
   }
   return offers;
@@ -94,17 +95,17 @@ var createOffer = function (offerNumber) {
       avatar: 'img/avatars/user0' + (offerNumber) + '.png'
     },
     offer: {
-      title: getRandomElementFromArray(TITLES),
+      title: getRandomElementFromArray(Titles),
       address: locationX + ', ' + locationY,
       price: getRandomIntInclusive(1000, 10000),
-      type: getRandomElementFromArray(TYPES),
+      type: getRandomElementFromArray(Types),
       rooms: getRandomIntInclusive(Rooms.MIN, Rooms.MAX),
       guests: getRandomIntInclusive(Guests.MIN, Guests.MAX),
-      checkin: getRandomElementFromArray(TIMES),
-      checkout: getRandomElementFromArray(TIMES),
-      features: getRandomElementFromArray(FEATURES),
-      description: getRandomElementFromArray(DESCRIPTION),
-      photos: getRandomElementFromArray(PHOTOS)
+      checkin: getRandomElementFromArray(Times),
+      checkout: getRandomElementFromArray(Times),
+      features: getRandomElementFromArray(Features),
+      description: getRandomElementFromArray(Description),
+      photos: getRandomElementFromArray(Photos)
     },
     location: {
       x: locationX,
@@ -142,4 +143,9 @@ var renderPins = function (offers) {
   var pins = document.querySelector('.map__pins');
   pins.appendChild(fragment);
 };
-
+window.pins = {
+  create: createPin,
+  create: renderPins,
+  create: getListOfOffers
+}
+})();

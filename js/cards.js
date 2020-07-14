@@ -1,3 +1,4 @@
+(function () {
 /**
  * DOM элемент по шаблону #card
  * @param {Object} card - объект с данными для карточки
@@ -30,6 +31,8 @@ var pushCard = function(offer) {
   var listElement = document.querySelector('.map__pins');
   listElement.appendChild(generateCard(offer));
 };
-var offers = getListOfOffers();
-renderPins(offers);
-pushCard(offers[0]);
+window.cards = {
+  create: pushCard,
+  create: generateCard
+}
+})();
