@@ -9,9 +9,8 @@
    * @param {Object} evt - Обэъект произошедшего события
    */
   var onPressMouseLeft = function(evt) {
-    var evt = addEventListener;
     if (evt.button === 0) {
-      activeMap(true);
+      activeMap();
     }
   }
   /**
@@ -19,19 +18,19 @@
    * @param {Object} evt - Обэъект произошедшего события
    */
   var onPressKeyboardEnter = function(evt) {
-    var evt = addEventListener;
     if (evt.key === 13) {
-      activeMap(true);
+      activeMap();
     }
   }
   /**
    * Функция активации карты
    */
   var activeMap = function() {
-    window.pins.create(offers);
-    window.cards.pushCard(offers[0]);
-    window.form.activate(MAJOR_FORM,true);
-    window.form.activate(FILTERS,true);
+
+    window.pins.result();
+    //window.cards.result();
+    // window.form.activate(MAJOR_FORM,true);
+    // window.form.activate(FILTERS,true);
     MAJOR_FORM.classList.remove('ad-form--disabled');
     MAP.classList.remove('map--faded');
     PIN_MAIN.removeEventListener('mousedown', onPressMouseLeft);
