@@ -26,11 +26,8 @@
    * Функция активации карты
    */
   var activeMap = function() {
-
-    window.pins.result();
+    window.pins.render(window.pins.generatedOffers(8));
     //window.cards.result();
-    // window.form.activate(MAJOR_FORM,true);
-    // window.form.activate(FILTERS,true);
     MAJOR_FORM.classList.remove('ad-form--disabled');
     MAP.classList.remove('map--faded');
     PIN_MAIN.removeEventListener('mousedown', onPressMouseLeft);
