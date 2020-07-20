@@ -1,6 +1,15 @@
 'use strict';
 window.validity = (function () {
   var MAJOR_FORM = document.querySelector('.ad-form');
+
+  // Нужно дорабоать функцию навешивания
+  var FIELDSET_DISABLED = function() {
+    var MAJOR_FORM_ELEMENT = document.querySelectorAll('.ad-form__element');
+    for (var i = 0; i < fieldset.length; i++) {
+      fieldset.setAttribute('disabled', 'disabled');
+    }
+  }
+
   var typeHousePrice = {
     'bungalo': 0,
     'flat': 1000,
