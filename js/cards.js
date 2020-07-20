@@ -1,3 +1,4 @@
+'use strict';
 window.cards = (function () {
   /**
    * DOM элемент по шаблону #card
@@ -26,7 +27,7 @@ window.cards = (function () {
    * @param {Object} offer - информация обьявления
    */
   var pushCard = function(offer) {
-    var listElement = document.querySelector('.map__pins');
+    var listElement = document.querySelector ('.map__pins');
     listElement.appendChild(generateCard(offer));
   };
 

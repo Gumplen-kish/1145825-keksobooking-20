@@ -117,7 +117,7 @@ window.pins = (function () {
   };
   /**
    * задаем расположение пина(ов)
-   * @param {Array} offer - массив с данными
+   * @param {Object} offer - объект с данными
    * @return - возвращает готовый пин
    */
   var createPin = function (offer) {
@@ -132,7 +132,7 @@ window.pins = (function () {
     pinAvatar.alt = offer.offer.title;
     pin.addEventListener ('mousedown', function(evt) {
       if (evt.button === 0 ) {
-        window.cards.pushCard;
+        window.cards.push(offer);
       }
     });
   return pin;

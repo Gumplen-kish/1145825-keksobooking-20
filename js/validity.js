@@ -29,7 +29,7 @@ window.validity = (function () {
   /**
    * валидация формы поля Количество комнат к Количеству гостей
    */
-  var checkRoomsGuests = function () {
+
     Count.ROOMS.addEventListener('change', function () {
       Count.ROOMS.setCustomValidity('');
       if (!countRoomsGuests[Count.ROOMS.value].includes(Count.GUESTS.value)) {
@@ -51,32 +51,22 @@ window.validity = (function () {
       }
       Count.GUESTS.reportValidity();
     });
-  };
   /**
    * валидация формы по полю Время заезда и выезда
    */
-  var checkTime = function () {
-    Time.IN.addEventListener('change', function () {
-      Time.OUT.value = Time.IN.value;
-    });
+  Time.IN.addEventListener('change', function () {
+    Time.OUT.value = Time.IN.value;
+  });
 
-    Time.OUT.addEventListener('change', function () {
-      Time.IN.value = Time.OUT.value;
-    });
-  };
+  Time.OUT.addEventListener('change', function () {
+    Time.IN.value = Time.OUT.value;
+  });
   /**
    * валидация формы по полям Тип жилья к Минимальной стоимости
    */
-  var checkMinPriceOnTypeHouse = function () {
-    House.TYPE.addEventListener('change', function () {
-      var minPriceValue = typeHousePrice[House.TYPE.value];
-      House.PRICE.min = minPriceValue;
-      House.PRICE.placeholder = minPriceValue;
-    });
-  };
-  return {
-    checkRoomsGuests:checkRoomsGuests,
-    checkTime:checkTime,
-    checkMinPriceOnTypeHouse:checkMinPriceOnTypeHouse,
-  };
+  House.TYPE.addEventListener('change', function () {
+    var minPriceValue = typeHousePrice[House.TYPE.value];
+    House.PRICE.min = minPriceValue;
+    House.PRICE.placeholder = minPriceValue;
+  });
 })();
