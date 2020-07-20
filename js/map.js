@@ -4,6 +4,7 @@
   var FILTERS = document.querySelector('.map__filters');
   var PIN_MAIN = document.querySelector('.map__pin--main');
   var MAJOR_FORM = document.querySelector('.ad-form');
+  
   /**
    *
    * @param {Object} evt - Обэъект произошедшего события

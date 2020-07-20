@@ -1,7 +1,6 @@
 'use strict';
 window.validity = (function () {
   var MAJOR_FORM = document.querySelector('.ad-form');
-
   var typeHousePrice = {
     'bungalo': 0,
     'flat': 1000,

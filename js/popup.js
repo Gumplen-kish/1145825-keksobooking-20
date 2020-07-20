@@ -32,7 +32,6 @@ window.popup = (function () {
   };
 
 
-
   CLOSE_POPUP.addEventListener('mousedown', onClosePopupLeft);
   window.addEventListener('keydown', onPopupEsc);
 })();
