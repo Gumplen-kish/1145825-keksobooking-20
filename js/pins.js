@@ -131,7 +131,7 @@ window.pins = (function () {
     pinAvatar.src = offer.author.avatar;
     pinAvatar.alt = offer.offer.title;
     pin.addEventListener ('mousedown', function(evt) {
-      if (evt.button === 0 ) {
+      if (evt.button === 0) {
         window.cards.push(offer);
       }
     });

@@ -1,6 +1,8 @@
 'use strict';
 window.popup = (function () {
-  var CLOSE_POPUP = document.querySelector('popup__close');
+  var CLOSE_POPUP = document.querySelector('.popup__close');
+
+
   /**
    * закрывает popup, навешивая класс hidden, удаляет обработчик события
    */
@@ -31,8 +33,10 @@ window.popup = (function () {
     }
   };
 
-
   CLOSE_POPUP.addEventListener('mousedown', onClosePopupLeft);
   window.addEventListener('keydown', onPopupEsc);
-})();
-
+  return {
+    close: popupeClose,
+    onClosePopupLeft: onClosePopupLeft
+  }
+});

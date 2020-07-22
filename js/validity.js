@@ -2,14 +2,6 @@
 window.validity = (function () {
   var MAJOR_FORM = document.querySelector('.ad-form');
 
-  // Нужно дорабоать функцию навешивания
-  var FIELDSET_DISABLED = function() {
-    var MAJOR_FORM_ELEMENT = document.querySelectorAll('.ad-form__element');
-    for (var i = 0; i < MAJOR_FORM_ELEMENT.length; i++) {
-      MAJOR_FORM_ELEMENT[i].setAttribute('disabled', 'disabled');
-    }
-  }
-  FIELDSET_DISABLED()
   var typeHousePrice = {
     'bungalo': 0,
     'flat': 1000,
@@ -34,10 +26,11 @@ window.validity = (function () {
     TYPE: MAJOR_FORM.querySelector('#type'),
     PRICE: MAJOR_FORM.querySelector('#price'),
   };
+
+
   /**
    * валидация формы поля Количество комнат к Количеству гостей
    */
-
     Count.ROOMS.addEventListener('change', function () {
       Count.ROOMS.setCustomValidity('');
       if (!countRoomsGuests[Count.ROOMS.value].includes(Count.GUESTS.value)) {
@@ -77,7 +70,4 @@ window.validity = (function () {
     House.PRICE.min = minPriceValue;
     House.PRICE.placeholder = minPriceValue;
   });
-  return {
-    disabled: FIELDSET_DISABLED()
-  }
 })();
