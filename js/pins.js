@@ -16,7 +16,7 @@ window.pins = (function () {
     MAX: 10
   };
   var times = ['12:00', '13:00', '14:00'];
-  var Features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+  var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
   var Titles = [
     'Хорошая квартира',
     'Хижина, как у лесника',
@@ -104,7 +104,7 @@ window.pins = (function () {
         guests: getRandomIntInclusive(Guests.MIN, Guests.MAX),
         checkin: getRandomElementFromArray(times),
         checkout: getRandomElementFromArray(times),
-        features: getRandomElementFromArray(Features),
+        features: FEATURES.slice(1,getRandomElementFromArray(FEATURES.length)),
         description: getRandomElementFromArray(Description),
         photos: getRandomElementFromArray(Photos)
       },
@@ -151,6 +151,7 @@ window.pins = (function () {
   };
   return {
     render: renderPins,
-    generatedOffers: getListOfOffers
+    generatedOffers: getListOfOffers,
+    createOffer: createOffer
   };
 })();
