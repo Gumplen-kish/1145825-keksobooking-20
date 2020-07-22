@@ -29,29 +29,29 @@ window.validity = (function () {
 
 
   /**
-   * валидация формы поля Количество комнат к Количеству гостей
-   */
-    Count.ROOMS.addEventListener('change', function () {
-      Count.ROOMS.setCustomValidity('');
-      if (!countRoomsGuests[Count.ROOMS.value].includes(Count.GUESTS.value)) {
-        Count.ROOMS.setCustomValidity('Количество комнат должно быть больше или равно количеству гостей');
-      } else {
-        Count.GUESTS.setCustomValidity('');
-      }
-      Count.ROOMS.reportValidity();
-    });
-    /**
-     * обратная проверка Колиство гостей к Количеству комнат
-     */
-    Count.GUESTS.addEventListener('change', function () {
+  * валидация формы поля Количество комнат к Количеству гостей
+  */
+  Count.ROOMS.addEventListener('change', function () {
+    Count.ROOMS.setCustomValidity('');
+    if (!countRoomsGuests[Count.ROOMS.value].includes(Count.GUESTS.value)) {
+      Count.ROOMS.setCustomValidity('Количество комнат должно быть больше или равно количеству гостей');
+    } else {
       Count.GUESTS.setCustomValidity('');
-      if (!countRoomsGuests[Count.ROOMS.value].includes(Count.GUESTS.value)) {
-        Count.GUESTS.setCustomValidity('Количество гостей должно быть меньше или равно количеству комнат');
-      } else {
-        Count.ROOMS.setCustomValidity('');
-      }
-      Count.GUESTS.reportValidity();
-    });
+    }
+    Count.ROOMS.reportValidity();
+  });
+  /**
+  * обратная проверка Колиство гостей к Количеству комнат
+  */
+  Count.GUESTS.addEventListener('change', function () {
+    Count.GUESTS.setCustomValidity('');
+    if (!countRoomsGuests[Count.ROOMS.value].includes(Count.GUESTS.value)) {
+      Count.GUESTS.setCustomValidity('Количество гостей должно быть меньше или равно количеству комнат');
+    } else {
+      Count.ROOMS.setCustomValidity('');
+    }
+    Count.GUESTS.reportValidity();
+  });
   /**
    * валидация формы по полю Время заезда и выезда
    */
