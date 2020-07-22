@@ -1,6 +1,6 @@
 'use strict';
 window.pins = (function () {
-  var Adsamount = 8;
+
   var Types = {
     PALACE: 'Дворец',
     FLAT: 'Квартира',
@@ -52,9 +52,9 @@ window.pins = (function () {
   var PIN_OFFSET_Y = 70;
 
   /**
-   * @param {number} arr - массив
-   * @length - длинна массива
-   * @return - возвращает случайную строку из массива
+   * Функция выбора случайной строки
+   * @param {Number} arr - массив
+   * @return {String} - возвращает случайную строку из массива
    */
   var getRandomElementFromArray = function (arr) {
     return arr[Math.floor(Math.random() * arr.length)];
@@ -62,9 +62,9 @@ window.pins = (function () {
   // Блок определения координат
   /**
    * Функция выбора рандомного числа в диапозоне, где максимум и минимум включены
-   * @param {number} min - минимальное число диапозона
-   * @param {number} max - максимальное число диапозона
-   * @return {number} - рандомное число
+   * @param {Number} min - минимальное число диапозона
+   * @param {Number} max - максимальное число диапозона
+   * @return {Number} - рандомное число
    */
   var getRandomIntInclusive = function (min, max) {
     min = Math.ceil(min);
@@ -72,20 +72,21 @@ window.pins = (function () {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
   /**
-   * @param {number} Adsamount - Количество аватаров и максимальное количество пинов
-   * @return {number} - Возвращает рандомное число
+   * Функция создания масива пинов
+   * @param {Number} adsamount - Количество пинов
+   * @return {Number} - Возвращает готовый массив пинов
    */
-  var getListOfOffers = function (Adsamount) {
+  var getListOfOffers = function (adsamount) {
     var offers = [];
-    for (var i = 0; i < Adsamount; i++) {
+    for (var i = 0; i < adsamount; i++) {
       offers[i] = createOffer(i + 1);
     }
     return offers;
   };
   /**
-   * Генерация массива моков из объектов
-   * @param {number} offerNumber - количество элеметов массива
-   * @return {Array} - Готовый массив с данными для пина
+   * Генерация объекта
+   * @param {Number} offerNumber - индекс пина
+   * @return {Array} - Готовый объект с данными для пина
    */
   var createOffer = function (offerNumber) {
     var locationX = getRandomIntInclusive(MapCoordinates.MIN_X, MapCoordinates.MAX_X);
@@ -114,12 +115,10 @@ window.pins = (function () {
     };
     return offer;
   };
-  var generatedOffers = getListOfOffers(Adsamount);
-
   /**
    * задаем расположение пина(ов)
-   * @param {Array} offer - массив с данными
-   * @return - возвращает готовый пин
+   * @param {Object} offer - объект с данными
+   * @return {Object} - возвращает готовый пин
    */
   var createPin = function (offer) {
     var pinTemplate = document.querySelector('#pin')
@@ -131,6 +130,11 @@ window.pins = (function () {
     var pinAvatar = pin.querySelector('img');
     pinAvatar.src = offer.author.avatar;
     pinAvatar.alt = offer.offer.title;
+    pin.addEventListener('mousedown', function (evt) {
+      if (evt.button === 0) {
+        window.cards.push(offer);
+      }
+    });
     return pin;
   };
   /**
@@ -146,8 +150,7 @@ window.pins = (function () {
     pins.appendChild(fragment);
   };
   return {
-    result: function () {
-      renderPins(generatedOffers)
-    }
+    render: renderPins,
+    generatedOffers: getListOfOffers
   };
 })();
