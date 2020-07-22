@@ -1,6 +1,6 @@
 'use strict';
 window.pins = (function () {
-  var ADSAMOUNT = 8;
+
   var Types = {
     PALACE: 'Дворец',
     FLAT: 'Квартира',
@@ -52,9 +52,9 @@ window.pins = (function () {
   var PIN_OFFSET_Y = 70;
 
   /**
-   * @param {number} arr - массив
-   * @length - длинна массива
-   * @return - возвращает случайную строку из массива
+   * Функция выбора случайной строки
+   * @param {Number} arr - массив
+   * @return {String} - возвращает случайную строку из массива
    */
   var getRandomElementFromArray = function (arr) {
     return arr[Math.floor(Math.random() * arr.length)];
@@ -62,9 +62,9 @@ window.pins = (function () {
   // Блок определения координат
   /**
    * Функция выбора рандомного числа в диапозоне, где максимум и минимум включены
-   * @param {number} min - минимальное число диапозона
-   * @param {number} max - максимальное число диапозона
-   * @return {number} - рандомное число
+   * @param {Number} min - минимальное число диапозона
+   * @param {Number} max - максимальное число диапозона
+   * @return {Number} - рандомное число
    */
   var getRandomIntInclusive = function (min, max) {
     min = Math.ceil(min);
@@ -73,8 +73,8 @@ window.pins = (function () {
   };
   /**
    * Функция создания масива пинов
-   * @param {number} adsamount - Количество пинов
-   * @return {number} - Возвращает готовый массив пинов
+   * @param {Number} adsamount - Количество пинов
+   * @return {Number} - Возвращает готовый массив пинов
    */
   var getListOfOffers = function (adsamount) {
     var offers = [];
@@ -85,7 +85,7 @@ window.pins = (function () {
   };
   /**
    * Генерация объекта
-   * @param {number} offerNumber - индекс пина
+   * @param {Number} offerNumber - индекс пина
    * @return {Array} - Готовый объект с данными для пина
    */
   var createOffer = function (offerNumber) {
@@ -118,7 +118,7 @@ window.pins = (function () {
   /**
    * задаем расположение пина(ов)
    * @param {Object} offer - объект с данными
-   * @return - возвращает готовый пин
+   * @return {Object} - возвращает готовый пин
    */
   var createPin = function (offer) {
     var pinTemplate = document.querySelector('#pin')
@@ -130,13 +130,13 @@ window.pins = (function () {
     var pinAvatar = pin.querySelector('img');
     pinAvatar.src = offer.author.avatar;
     pinAvatar.alt = offer.offer.title;
-    pin.addEventListener ('mousedown', function(evt) {
+    pin.addEventListener('mousedown', function (evt) {
       if (evt.button === 0) {
         window.cards.push(offer);
       }
     });
-  return pin;
-  }
+    return pin;
+  };
   /**
    * Добавляем пины в разметку
    * @param {Array} offers - массивы с данными

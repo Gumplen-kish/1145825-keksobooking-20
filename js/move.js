@@ -49,7 +49,7 @@ window.move = (function () {
           mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
         }
 
-        if (currentY > MapSize.HEIGHT_MAX) {
+        if (currentY > SizeMap.HEIGHT_MAX) {
           mapPinMain.style.top = (SizeMap.HEIGHT_MAX - SizeMainPin.HEIGHT - SizeMainPin.EDGE) + 'px';
         } else if (currentY < SizeMap.HEIGHT_MIN) {
           mapPinMain.style.top = (SizeMap.HEIGHT_MIN - SizeMainPin.HEIGHT - SizeMainPin.EDGE) + 'px';
