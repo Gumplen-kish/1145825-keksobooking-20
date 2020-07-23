@@ -2,8 +2,8 @@
 window.popup = (function () {
 
   /**
-   * закрывает popup, удаляя button, удаляет обработчик события
-   */
+  * закрывает popup, удаляя button, удаляет обработчик события
+  */
   var popupClose = function () {
     var popup = document.querySelector('.map__card');
     popup.remove();
@@ -11,9 +11,9 @@ window.popup = (function () {
   };
 
   /**
-   * Вызывает функцию закрытия попапа при нажатии клавиши Esc
-   * @param {Object} evt - хранит в себе событие нажатия
-   */
+  * Вызывает функцию закрытия попапа при нажатии клавиши Esc
+  * @param {Object} evt - хранит в себе событие нажатия
+  */
   var onPressEsc = function (evt) {
     if (evt.key === 27) {
       popupClose();
@@ -21,9 +21,9 @@ window.popup = (function () {
   };
 
   /**
-   * Вызывает функцию закрытия попапа при нажатии левой кнопкой мыши
-   * @param {Object} evt - хранит в себе событие нажатия
-   */
+  * Вызывает функцию закрытия попапа при нажатии левой кнопкой мыши
+  * @param {Object} evt - хранит в себе событие нажатия
+  */
   var onClosePopupLeft = function (evt) {
     if (evt.button === 0) {
       popupClose();

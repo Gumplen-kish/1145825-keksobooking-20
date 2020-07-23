@@ -137,10 +137,11 @@ window.pins = (function () {
     });
     return pin;
   };
+
   /**
-   * Добавляем пины в разметку
-   * @param {Array} offers - массивы с данными
-   */
+  * Добавляем пины в разметку
+  * @param {Array} offers - массивы с данными
+  */
   var renderPins = function (offers) {
     var fragment = document.createDocumentFragment();
     for (var j = 0; j < offers.length; j++) {
@@ -149,6 +150,7 @@ window.pins = (function () {
     var pins = document.querySelector('.map__pins');
     pins.appendChild(fragment);
   };
+
   return {
     render: renderPins,
     generatedOffers: getListOfOffers,
