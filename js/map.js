@@ -51,6 +51,7 @@
     MAP.classList.remove('map--faded');
     PIN_MAIN.removeEventListener('mousedown', onPressMouseLeft);
     PIN_MAIN.removeEventListener('keydown', onPressKeyboardEnter);
+    PIN_MAIN.addEventListener('mousedown', window.move.onPinMouseMove);
   };
   PIN_MAIN.addEventListener('mousedown', onPressMouseLeft);
   PIN_MAIN.addEventListener('keydown', onPressKeyboardEnter);

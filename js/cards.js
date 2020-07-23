@@ -21,10 +21,12 @@ window.cards = (function () {
     cardElement.querySelector('.popup__type').textContent = card.offer.type;
     cardElement.querySelector('.popup__text--capacity').textContent = card.offer.rooms + ' комнаты для ' + card.offer.guests + ' гостей';
     cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + card.offer.checkin + ', выезд до ' + card.offer.checkout;
-    //var elementFeatures = cardElement.querySelectorAll('.popup__features');
-    //card.offer.features.forEach(function (feature) {
-
-    // });
+    var cardElementFeatures = function () {
+      var elementFeatures = cardElement.querySelectorAll('.popup__features');
+        elementFeatures.forEach(function (item) {
+          console.log(item);
+      });
+    };cardElementFeatures();
     cardElement.querySelector('.popup__description').textContent = card.offer.description;
     cardElement.querySelector('.popup__avatar').src = card.author.avatar;
 
@@ -34,7 +36,7 @@ window.cards = (function () {
 
     return cardElement;
   }
-  
+
   /**
   * Показываем карточку обьявления
   * @param {Object} offer - информация обьявления
