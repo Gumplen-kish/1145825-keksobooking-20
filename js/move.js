@@ -1,5 +1,6 @@
 'use strict';
 window.move = (function () {
+
   //var SizeMainPin = {
     //WIDTH: 65,
     //HEIGHT: 65,
@@ -30,6 +31,7 @@ window.move = (function () {
       var onMouseMove = function (moveEvt) {
         moveEvt.preventDefault();
 
+
         var shift = {
           x: startCoords.x - moveEvt.clientX,
           y: startCoords.y - moveEvt.clientY
@@ -39,8 +41,8 @@ window.move = (function () {
           x: moveEvt.clientX,
           y: moveEvt.clientY
         };
-        mapPinMain.style.top = (MapPinMain.offsetTop - shift.y) + 'px';
-        mapPinMain.style.left = (MapPinMain.offsetLeft - shift.x) + 'px';
+        mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
+        mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
 
         //inputAddress.value = X + ', ' + Y;
       };
