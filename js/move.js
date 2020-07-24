@@ -1,17 +1,17 @@
 'use strict';
 window.move = (function () {
 
-  //var SizeMainPin = {
-    //WIDTH: 65,
-    //HEIGHT: 65,
-    //TRIANGLE_HEIGHT: 22
-  //};
-  //var SizeMap = {
-    //WIDTH_MIN: 0,
-    //WIDTH_MAX: 1200,
-    //HEIGHT_MIN: 130,
-    //HEIGHT_MAX: 630
-  //};
+  var SizeMainPin = {
+    WIDTH: 65,
+    HEIGHT: 65,
+    TRIANGLE_HEIGHT: 22
+  };
+  var SizeMap = {
+    WIDTH_MIN: 0,
+    WIDTH_MAX: 1200,
+    HEIGHT_MIN: 130,
+    HEIGHT_MAX: 630
+  };
    //var inputAddress = document.querySelector('#address');
 
   // mapPinMain.addEventListener('mousedown', function (evt) {
@@ -41,9 +41,25 @@ window.move = (function () {
           x: moveEvt.clientX,
           y: moveEvt.clientY
         };
-        mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
-        mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
 
+        if (moveEvt.clientX > SizeMap.WIDTH_MAX) {
+          mapPinMain.style.left = (SizeMap.WIDTH_MAX - Math.ceil(SizeMainPin.WIDTH / 2)) + 'px';
+        } else if (1200 < SizeMap.WIDTH_MIN) {
+          mapPinMain.style.left = (SizeMap.WIDTH_MIN - Math.ceil(SizeMainPin.WIDTH / 2)) + 'px';
+        } else {
+          mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
+        }
+
+        if (moveEvt.clientY > SizeMap.HEIGHT_MAX) {
+          mapPinMain.style.top = (SizeMap.HEIGHT_MAX - SizeMainPin.HEIGHT - SizeMainPin.TRIANGLE_HEIGHT) + 'px';
+        } else if (630 < SizeMap.HEIGHT_MIN) {
+          mapPinMain.style.top = (SizeMap.HEIGHT_MIN - SizeMainPin.HEIGHT - SizeMainPin.TRIANGLE_HEIGHT) + 'px';
+        } else {
+          mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
+        }
+
+        //mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
+        //mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
         //inputAddress.value = X + ', ' + Y;
       };
 
