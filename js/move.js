@@ -12,9 +12,6 @@ window.move = (function () {
     HEIGHT_MIN: 130,
     HEIGHT_MAX: 630
   };
-   //var inputAddress = document.querySelector('#address');
-
-  // mapPinMain.addEventListener('mousedown', function (evt) {
   return {
     onPinMouseMove: function (evt) {
       var mapPinMain = document.querySelector('.map__pin--main');
@@ -57,10 +54,6 @@ window.move = (function () {
         } else {
           mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
         }
-
-        //mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
-        //mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
-        //inputAddress.value = X + ', ' + Y;
       };
 
       /**

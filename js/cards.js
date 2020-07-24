@@ -1,10 +1,5 @@
 'use strict';
 window.cards = (function () {
-  var MainPinSize = {
-    WIDTH: 65,
-    HEIGHT: 65,
-    TRIANGLE_HEIGHT: 22
-  };
   /**
   * DOM элемент по шаблону #card
   * @param {Object} card - объект с данными для карточки
@@ -26,16 +21,16 @@ window.cards = (function () {
         elementFeatures.forEach(function (item) {
           console.log(item);
       });
-    };cardElementFeatures();
+    };
+    cardElementFeatures();
     cardElement.querySelector('.popup__description').textContent = card.offer.description;
     cardElement.querySelector('.popup__avatar').src = card.author.avatar;
-
     var closePopup = cardElement.querySelector('.popup__close');
     closePopup.addEventListener('click', window.popup.onCloseLeft);
     window.addEventListener('keydown', window.popup.onPressEsc);
 
     return cardElement;
-  }
+  };
 
   /**
   * Показываем карточку обьявления

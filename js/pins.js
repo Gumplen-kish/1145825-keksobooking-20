@@ -104,7 +104,7 @@ window.pins = (function () {
         guests: getRandomIntInclusive(Guests.MIN, Guests.MAX),
         checkin: getRandomElementFromArray(times),
         checkout: getRandomElementFromArray(times),
-        features: FEATURES.slice(1,getRandomElementFromArray(FEATURES.length)),
+        features: FEATURES.slice(1, getRandomElementFromArray(FEATURES.length)),
         description: getRandomElementFromArray(Description),
         photos: getRandomElementFromArray(Photos)
       },
