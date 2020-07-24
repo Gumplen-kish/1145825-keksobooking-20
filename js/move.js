@@ -7,7 +7,7 @@ window.move = (function () {
     TRIANGLE_HEIGHT: 22
   };
   var SizeMap = {
-    WIDTH_MIN: 0,
+    WIDTH_MIN: 70,
     WIDTH_MAX: 1200,
     HEIGHT_MIN: 130,
     HEIGHT_MAX: 630
@@ -44,7 +44,7 @@ window.move = (function () {
 
         if (moveEvt.clientX > SizeMap.WIDTH_MAX) {
           mapPinMain.style.left = (SizeMap.WIDTH_MAX - Math.ceil(SizeMainPin.WIDTH / 2)) + 'px';
-        } else if (1200 < SizeMap.WIDTH_MIN) {
+        } else if (moveEvt.clientX < SizeMap.WIDTH_MIN) {
           mapPinMain.style.left = (SizeMap.WIDTH_MIN - Math.ceil(SizeMainPin.WIDTH / 2)) + 'px';
         } else {
           mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
@@ -52,7 +52,7 @@ window.move = (function () {
 
         if (moveEvt.clientY > SizeMap.HEIGHT_MAX) {
           mapPinMain.style.top = (SizeMap.HEIGHT_MAX - SizeMainPin.HEIGHT - SizeMainPin.TRIANGLE_HEIGHT) + 'px';
-        } else if (630 < SizeMap.HEIGHT_MIN) {
+        } else if (moveEvt.clientY < SizeMap.HEIGHT_MIN) {
           mapPinMain.style.top = (SizeMap.HEIGHT_MIN - SizeMainPin.HEIGHT - SizeMainPin.TRIANGLE_HEIGHT) + 'px';
         } else {
           mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
