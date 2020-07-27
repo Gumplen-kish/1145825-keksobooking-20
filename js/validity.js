@@ -61,7 +61,7 @@ window.validity = (function () {
   Time.OUT.addEventListener('change', function () {
     Time.IN.value = Time.OUT.value;
   });
-  
+
   /**
    * валидация формы по полям Тип жилья к Минимальной стоимости
    */
@@ -71,7 +71,17 @@ window.validity = (function () {
     House.PRICE.placeholder = minPriceValue;
   });
 
+  /**
+   * сброс placeholder до начального значения
+   */
+  // var resetValidity = function () {
+  // typeHousePrice.placeholder = typeHousePrice[House.TYPE.value]; //Тут должны быть переменные которые мы очищаем, но не работает
+  // };
+
   formElement.addEventListener('submit', function () {
     window.backend.save(fn1, onError, data);
   });
+  window.validity = {
+    reset: resetValidity
+  }
 })();

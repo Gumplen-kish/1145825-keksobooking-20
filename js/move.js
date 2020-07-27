@@ -9,13 +9,13 @@
     TRIANGLE_HEIGHT: 22
   };
   var SizeMap = {
-    WIDTH_MIN: 0,
-    WIDTH_MAX: 1200,
-    HEIGHT_MIN: 130,
-    HEIGHT_MAX: 630
+    WIDTH_LEFT: 0,
+    WIDTH_RIGHT: 1200,
+    HEIGHT_BOTTOM: 130,
+    HEIGHT_TOP: 630
   };
 
-  addressInput.value = '155, 150';
+  addressInput.value = '575, 315';
 
   var onPinMouseMove = function (evt) {
     var mapPinMain = PIN_MAIN;
@@ -47,18 +47,18 @@
       var xPointCoord = mapPinMain.offsetLeft - shift.x;
       var yPointCoord = mapPinMain.offsetTop - shift.y;
 
-      if (xCoord >= SizeMap.WIDTH_MAX) {
-        mapPinMain.style.left = (SizeMap.WIDTH_MAX - Math.ceil(SizeMainPin.WIDTH / 2)) + 'px';
-      } else if (yCoord <= SizeMap.WIDTH_MIN) {
-        mapPinMain.style.left = (SizeMap.WIDTH_MIN - Math.ceil(SizeMainPin.WIDTH / 2)) + 'px';
+      if (xCoord >= SizeMap.WIDTH_RIGHT) {
+        mapPinMain.style.left = (SizeMap.WIDTH_RIGHT - Math.ceil(SizeMainPin.WIDTH / 2)) + 'px';
+      } else if (yCoord <= SizeMap.WIDTH_LEFT) {
+        mapPinMain.style.left = (SizeMap.WIDTH_LEFT - Math.ceil(SizeMainPin.WIDTH / 2)) + 'px';
       } else {
         mapPinMain.style.left = xPointCoord + 'px';
       }
 
-      if (yCoord >= SizeMap.HEIGHT_MAX) {
-        mapPinMain.style.top = (SizeMap.HEIGHT_MAX - SizeMainPin.HEIGHT - SizeMainPin.TRIANGLE_HEIGHT) + 'px';
-      } else if (yCoord <= SizeMap.HEIGHT_MIN) {
-        mapPinMain.style.top = (SizeMap.HEIGHT_MIN - SizeMainPin.HEIGHT - SizeMainPin.TRIANGLE_HEIGHT) + 'px';
+      if (yCoord >= SizeMap.HEIGHT_TOP) {
+        mapPinMain.style.top = (SizeMap.HEIGHT_TOP - SizeMainPin.HEIGHT - SizeMainPin.TRIANGLE_HEIGHT) + 'px';
+      } else if (yCoord <= SizeMap.HEIGHT_BOTTOM) {
+        mapPinMain.style.top = (SizeMap.HEIGHT_BOTTOM - SizeMainPin.HEIGHT - SizeMainPin.TRIANGLE_HEIGHT) + 'px';
       } else {
         mapPinMain.style.top = yPointCoord + 'px';
       }
