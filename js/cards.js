@@ -1,11 +1,16 @@
 'use strict';
-window.cards = (function () {
+(function () {
   /**
   * DOM элемент по шаблону #card
   * @param {Object} card - объект с данными для карточки
   * @return {Object} - html разметка карточки
   */
   var generateCard = function (card) {
+    var oldPopup = document.querySelector('.map__card');
+    if (oldPopup) {
+      oldPopup.remove();
+    }
+
     var cardTemplate = document.querySelector('#card')
     .content.querySelector('.map__card');
     var cardElement = cardTemplate.cloneNode(true);
@@ -18,8 +23,8 @@ window.cards = (function () {
     cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + card.offer.checkin + ', выезд до ' + card.offer.checkout;
     var cardElementFeatures = function () {
       var elementFeatures = cardElement.querySelectorAll('.popup__features');
-        elementFeatures.forEach(function (item) {
-          console.log(item);
+      elementFeatures.forEach(function (feature) {
+        console.log(feature);
       });
     };
     cardElementFeatures();
@@ -28,7 +33,6 @@ window.cards = (function () {
     var closePopup = cardElement.querySelector('.popup__close');
     closePopup.addEventListener('click', window.popup.onCloseLeft);
     window.addEventListener('keydown', window.popup.onPressEsc);
-
     return cardElement;
   };
 
@@ -42,7 +46,7 @@ window.cards = (function () {
     listElement.appendChild(card);
   };
 
-  return {
+  window.cards = {
     push: pushCard
   };
 })();

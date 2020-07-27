@@ -1,61 +1,62 @@
 'use strict';
 (function () {
+  var TIMEOUT = 10000;
   var Url = {
     LOAD: 'https://javascript.pages.academy/keksobooking/data',
     POST: 'https://javascript.pages.academy/keksobooking'
-  }
+  };
 
   /**
    * Возвращает XHR объект
    * @param {Object} onSuccess - действия при получении данных с сервера
    * @param {function} onError -
+   * @return {Object} - объект xhr
    */
   var settingXhr = function (onSuccess, onError) {
-  var xhr = new XMLHttpRequest();
-  xhr.responseType = 'json';
-  console.log(xhr);
-  xhr.addEventListener('load', function () {
-    var error;
-    switch (xhr.status) {
-      case 200:
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = 'json';
+    xhr.timeout = TIMEOUT;
+    xhr.addEventListener('load', function () {
+      if (xhr.status === 200) {
         onSuccess(xhr.response);
-        break;
-      case 400:
-        error = 'Неверный запрос';
-        break;
-      case 401:
-        error = 'Пользователь не авторизован';
-        break;
-      case 404:
-        error = 'Ничего не найдено';
-        break;
-      default:
-        error = 'Cтатус ответа: : ' + xhr.status + ' ' + xhr.statusText;
-    }
-    if (error) {
-      onError(error);
-    }
-  });
-  xhr.addEventListener('error', function () {
-    onError('Произошла ошибка соединения');
-  });
-  xhr.addEventListener('timeout', function () {
-    onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
-  });
-  xhr.timeout = 10000;
+      } else {
+        onError('Cтатус ответа: : ' + xhr.status + ' ' + xhr.statusText);
+      }
+    });
+    xhr.addEventListener('error', function () {
+      onError('Произошла ошибка соединения');
+    });
+    xhr.addEventListener('timeout', function () {
+      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+    });
+    return xhr;
+  };
 
-  var onSuccess = function (data) {
-    var announcements = data;
-    console.log(announcements);
+  /**
+   * Функция, которая выполняет запрос к серверу
+   * @param {Object} onSuccess - действие при успешном запросе
+   * @param {Object} onError - действие при ошибке
+   */
+  var getData = function (onSuccess, onError) {
+    var xhr = settingXhr(onSuccess, onError);
+    xhr.open('GET', Url.LOAD);
+    xhr.send();
   };
-  var onError = function (message) {
-    console.error(message);
-  };
-  xhr.open('GET', Url.LOAD);
-  xhr.send();
+
+  /**
+   * Функция отправки данных на сервер
+   * @param {Object} onSuccess - действие при успешной отправке
+   * @param {Object} onError - действие при ошибке
+   * @param {Object} data - обьект данных, который мы отправляем
+   */
+  var saveData = function (onSuccess, onError, data) {
+    var xhr = settingXhr(onSuccess, onError);
+    xhr.open('POST', Url.POST);
+    xhr.send(data);
   };
 
   window.backend = {
-    set: settingXhr
-  }
+    get: getData,
+    save: saveData
+  };
 })();

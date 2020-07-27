@@ -1,12 +1,11 @@
 'use strict';
-window.popup = (function () {
-
+(function () {
   /**
   * закрывает popup, удаляя button, удаляет обработчик события
   */
   var popupClose = function () {
-    var popup = document.querySelector('.map__card');
-    popup.remove();
+    var oldPopup = document.querySelector('.map__card');
+    oldPopup.remove();
     document.removeEventListener('keydown', onPressEsc);
   };
 
@@ -15,7 +14,7 @@ window.popup = (function () {
   * @param {Object} evt - хранит в себе событие нажатия
   */
   var onPressEsc = function (evt) {
-    if (evt.key === 27) {
+    if (evt.keyCode === 27) {
       popupClose();
     }
   };
@@ -30,8 +29,7 @@ window.popup = (function () {
     }
   };
 
-
-  return {
+  window.popup = {
     close: popupClose,
     onCloseLeft: onClosePopupLeft,
     onPressEsc: onPressEsc

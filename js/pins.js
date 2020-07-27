@@ -1,5 +1,5 @@
 'use strict';
-window.pins = (function () {
+(function () {
 
   var Types = {
     PALACE: 'Дворец',
@@ -59,7 +59,7 @@ window.pins = (function () {
   var getRandomElementFromArray = function (arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   };
-  // Блок определения координат
+
   /**
    * Функция выбора рандомного числа в диапозоне, где максимум и минимум включены
    * @param {Number} min - минимальное число диапозона
@@ -71,6 +71,7 @@ window.pins = (function () {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
+
   /**
    * Функция создания масива пинов
    * @param {Number} adsamount - Количество пинов
@@ -83,6 +84,7 @@ window.pins = (function () {
     }
     return offers;
   };
+
   /**
    * Генерация объекта
    * @param {Number} offerNumber - индекс пина
@@ -135,6 +137,11 @@ window.pins = (function () {
         window.cards.push(offer);
       }
     });
+    pin.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === 13) {
+        window.cards.push(offer);
+      }
+    });
     return pin;
   };
 
@@ -143,15 +150,15 @@ window.pins = (function () {
   * @param {Array} offers - массив с данными
   */
   var renderPins = function (offers) {
-    var fragment = document.createDocumentFragment();
-    for (var j = 0; j < offers.length; j++) {
-      fragment.appendChild(createPin(offers[j]));
-    }
+    var pinsFragment = document.createDocumentFragment();
+    offers.forEach(function (offer) {
+      pinsFragment.appendChild(createPin(offer));
+    });
     var pins = document.querySelector('.map__pins');
-    pins.appendChild(fragment);
+    pins.appendChild(pinsFragment);
   };
 
-  return {
+  window.pins = {
     render: renderPins,
     generatedOffers: getListOfOffers,
     createOffer: createOffer

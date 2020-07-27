@@ -1,65 +1,95 @@
 'use strict';
 (function () {
-  var MAP = document.querySelector('.map');
-  var PIN_MAIN = document.querySelector('.map__pin--main');
-  var MAJOR_FORM = document.querySelector('.ad-form');
-  var MAJOR_FORM_ELEMENT = document.querySelectorAll('.ad-form__element');
+  var mapElement = document.querySelector('.map');
+  var pinMainElement = document.querySelector('.map__pin--main');
+  var formElement = document.querySelector('.ad-form');
+  var fieldsetElements = document.querySelectorAll('.ad-form fieldset');
+
   /**
-  * Функция блокировки полей в неактивном виде
-  */
+   * Функция блокировки полей в неактивном виде
+   */
   var fieldsetDisabled = function () {
-    for (var i = 0; i < MAJOR_FORM_ELEMENT.length; i++) {
-      MAJOR_FORM_ELEMENT[i].setAttribute('disabled', 'disabled');
-    }
+    fieldsetElements.forEach(function (fieldset) {
+      fieldset.setAttribute('disabled', 'disabled');
+    });
   };
+
   fieldsetDisabled();
+
   /**
-  * Функция разблокировки полей в активном состоянии
-  */
+   * Функция разблокировки полей в активном состоянии
+   */
   var unFieldsetDisabled = function () {
-    for (var i = 0; i < MAJOR_FORM_ELEMENT.length; i++) {
-      MAJOR_FORM_ELEMENT[i].removeAttribute('disabled', 'disabled');
+    for (var i = 0; i < fieldsetElements.length; i++) {
+      fieldsetElements[i].removeAttribute('disabled', 'disabled');
     }
   };
 
-
   /**
-  *
-  * @param {Object} evt - Обэъект произошедшего события
-  */
+   *
+   * @param {Object} evt - Обэъект произошедшего события
+   */
   var onPressMouseLeft = function (evt) {
     if (evt.button === 0) {
       activeMap();
     }
   };
+
   /**
-  *
-  * @param {Object} evt - Обэъект произошедшего события
-  */
+   *
+   * @param {Object} evt - Обэъект произошедшего события
+   */
   var onPressKeyboardEnter = function (evt) {
-    if (evt.key === 13) {
+    if (evt.keyCode === 13) {
       activeMap();
     }
   };
+
   /**
-  * Функция активации карты
-  */
+   * Функция, которая рендерит пины, полученные от сервера
+   * @param {Object} pinsData - объект данных, полученный от сервера, содержит в себе информацию о пинах
+   */
+  var onSuccessDownloadData = function (pinsData) {
+    window.pins.render(pinsData);
+  };
+
+  /**
+   * Функция вывода сообщения ошибки
+   * @param {Object} errorMessage - сообщение об ошибке
+   */
+  var onError = function (errorMessage) {
+    console.error(errorMessage);
+  };
+
+  /**
+   * Функция активации карты
+   */
   var activeMap = function () {
-    window.pins.render(window.pins.generatedOffers(8));
-    MAJOR_FORM.classList.remove('ad-form--disabled');
+    window.backend.get(onSuccessDownloadData, onError);
+    formElement.classList.remove('ad-form--disabled');
     unFieldsetDisabled();
-    MAP.classList.remove('map--faded');
-    PIN_MAIN.removeEventListener('mousedown', onPressMouseLeft);
-    PIN_MAIN.removeEventListener('keydown', onPressKeyboardEnter);
-    PIN_MAIN.addEventListener('mousedown', window.move.onPinMouseMove);
-    window.backend.set(function () {
-      console.log('ok');
-    },
-      function () {
-      console.error('no');
+    mapElement.classList.remove('map--faded');
+    pinMainElement.removeEventListener('mousedown', onPressMouseLeft);
+    pinMainElement.removeEventListener('keydown', onPressKeyboardEnter);
+    pinMainElement.addEventListener('mousedown', window.move.onPinMouse);
+    document.querySelector('.ad-form__reset').addEventListener('click', function () {
+      deActiveMap();
     });
   };
-  PIN_MAIN.addEventListener('mousedown', onPressMouseLeft);
-  PIN_MAIN.addEventListener('keydown', onPressKeyboardEnter);
+
+  /**
+   * Функция деактивации карты
+   */
+  var deActiveMap = function () {
+    pinMainElement.classList.add('ad-form--disabled');
+    fieldsetDisabled();
+    mapElement.classList.add('map--faded');
+    pinMainElement.addEventListener('mousedown', onPressMouseLeft);
+    pinMainElement.addEventListener('keydown', onPressKeyboardEnter);
+    pinMainElement.removeEventListener('mousedown', window.move.onPinMouse);
+  };
+
+  pinMainElement.addEventListener('mousedown', onPressMouseLeft);
+  pinMainElement.addEventListener('keydown', onPressKeyboardEnter);
 })();
 
