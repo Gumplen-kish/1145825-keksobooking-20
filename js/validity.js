@@ -1,12 +1,12 @@
 'use strict';
 window.validity = (function () {
-  var MAJOR_FORM = document.querySelector('.ad-form');
+  var formElement = document.querySelector('.ad-form');
 
   var typeHousePrice = {
-    'bungalo': 0,
-    'flat': 1000,
-    'house': 5000,
-    'palace': 10000
+    bungalo: 0,
+    flat: 1000,
+    house: 5000,
+    palace: 10000
   };
   var countRoomsGuests = {
     1: [1],
@@ -15,18 +15,17 @@ window.validity = (function () {
     100: [100]
   };
   var Time = {
-    IN: MAJOR_FORM.querySelector('#timein'),
-    OUT: MAJOR_FORM.querySelector('#timeout'),
+    IN: formElement.querySelector('#timein'),
+    OUT: formElement.querySelector('#timeout'),
   };
   var Count = {
-    ROOMS: MAJOR_FORM.querySelector('#room_number'),
-    GUESTS: MAJOR_FORM.querySelector('#capacity'),
+    ROOMS: formElement.querySelector('#room_number'),
+    GUESTS: formElement.querySelector('#capacity'),
   };
   var House = {
-    TYPE: MAJOR_FORM.querySelector('#type'),
-    PRICE: MAJOR_FORM.querySelector('#price'),
+    TYPE: formElement.querySelector('#type'),
+    PRICE: formElement.querySelector('#price'),
   };
-
 
   /**
   * валидация формы поля Количество комнат к Количеству гостей
@@ -62,6 +61,7 @@ window.validity = (function () {
   Time.OUT.addEventListener('change', function () {
     Time.IN.value = Time.OUT.value;
   });
+
   /**
    * валидация формы по полям Тип жилья к Минимальной стоимости
    */
@@ -70,4 +70,18 @@ window.validity = (function () {
     House.PRICE.min = minPriceValue;
     House.PRICE.placeholder = minPriceValue;
   });
+
+  /**
+   * сброс placeholder до начального значения
+   */
+  // var resetValidity = function () {
+  // typeHousePrice.placeholder = typeHousePrice[House.TYPE.value]; //Тут должны быть переменные которые мы очищаем, но не работает
+  // };
+
+  formElement.addEventListener('submit', function () {
+    window.backend.save(fn1, onError, data);
+  });
+  window.validity = {
+    reset: resetValidity
+  }
 })();
