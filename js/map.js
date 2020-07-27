@@ -52,6 +52,12 @@
     PIN_MAIN.removeEventListener('mousedown', onPressMouseLeft);
     PIN_MAIN.removeEventListener('keydown', onPressKeyboardEnter);
     PIN_MAIN.addEventListener('mousedown', window.move.onPinMouseMove);
+    window.backend.set(function () {
+      console.log('ok');
+    },
+      function () {
+      console.error('no');
+    });
   };
   PIN_MAIN.addEventListener('mousedown', onPressMouseLeft);
   PIN_MAIN.addEventListener('keydown', onPressKeyboardEnter);

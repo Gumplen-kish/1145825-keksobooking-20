@@ -140,7 +140,7 @@ window.pins = (function () {
 
   /**
   * Добавляем пины в разметку
-  * @param {Array} offers - массивы с данными
+  * @param {Array} offers - массив с данными
   */
   var renderPins = function (offers) {
     var fragment = document.createDocumentFragment();

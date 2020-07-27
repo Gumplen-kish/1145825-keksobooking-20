@@ -1,14 +1,16 @@
 'use strict';
 (function () {
-  var url = 'https://javascript.pages.academy/keksobooking/data';
-  var onError = function (message) {
-    console.error(message);
-  };
-  var onSuccess = function (data) {
-    var announcements = data;
-    console.log(announcements);
-  };
+  var Url = {
+    LOAD: 'https://javascript.pages.academy/keksobooking/data',
+    POST: 'https://javascript.pages.academy/keksobooking'
+  }
 
+  /**
+   * Возвращает XHR объект
+   * @param {Object} onSuccess - действия при получении данных с сервера
+   * @param {function} onError -
+   */
+  var settingXhr = function (onSuccess, onError) {
   var xhr = new XMLHttpRequest();
   xhr.responseType = 'json';
   console.log(xhr);
@@ -42,6 +44,18 @@
   });
   xhr.timeout = 10000;
 
-  xhr.open('GET', url);
+  var onSuccess = function (data) {
+    var announcements = data;
+    console.log(announcements);
+  };
+  var onError = function (message) {
+    console.error(message);
+  };
+  xhr.open('GET', Url.LOAD);
   xhr.send();
+  };
+
+  window.backend = {
+    set: settingXhr
+  }
 })();
