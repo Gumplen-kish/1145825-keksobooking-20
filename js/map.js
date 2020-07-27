@@ -83,7 +83,7 @@
   var deActiveMap = function () {
     pinMainElement.classList.add('ad-form--disabled');
     fieldsetDisabled();
-    // window.validity.reset();
+    window.validity.reset();
     mapElement.classList.add('map--faded');
     pinMainElement.addEventListener('mousedown', onPressMouseLeft);
     pinMainElement.addEventListener('keydown', onPressKeyboardEnter);

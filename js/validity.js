@@ -74,14 +74,15 @@ window.validity = (function () {
   /**
    * сброс placeholder до начального значения
    */
-  // var resetValidity = function () {
-  // typeHousePrice.placeholder = typeHousePrice[House.TYPE.value]; //Тут должны быть переменные которые мы очищаем, но не работает
-  // };
+  var resetFormElements = function () {
+    House.PRICE.placeholder = typeHousePrice ['flat'];
+    House.PRICE.min = typeHousePrice ['flat'];
+  };
 
   formElement.addEventListener('submit', function () {
     window.backend.save(fn1, onError, data);
   });
   window.validity = {
-    reset: resetValidity
+    reset: resetFormElements
   }
 })();
