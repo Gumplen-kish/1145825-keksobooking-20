@@ -48,5 +48,4 @@
     };
     render(loadedPins.filter(filteredArray));
   });
-
 })();
