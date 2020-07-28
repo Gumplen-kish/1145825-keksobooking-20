@@ -1,51 +1,90 @@
 'use strict';
+
 (function () {
-  var onChangeHandler = window.util.debounce(function () {
-    var houseType = selectHouseType.value;
-    var housePrice = selectHousePrice.value;
-    var houseRooms = selectHouseRooms.value.toString();
-    var houseGuests = selectHouseGuests.value.toString();
+  var FILTERS = document.querySelector('.map__filters');
+  var ads = [];
+  var FilterPrice = {
+    MIN: 10000,
+    MAX: 50000,
+  };
 
-    var filteredArray = function (element) {
-      var isType = true;
-      var isRooms = true;
-      var isGuests = true;
-      var isPrice = true;
-      var isFeatures = true;
+  var Housing = {
+    TYPE: document.querySelector('#housing-type'),
+    ROOMS: document.querySelector('#housing-rooms'),
+    GUESTS: document.querySelector('#housing-guests'),
+    PRICE: document.querySelector('#housing-price'),
+    FEATURES: document.querySelector('#housing-features'),
+  };
 
-      var checkedFeatures = document.querySelectorAll('input[name="features"]:checked');
-      if (checkedFeatures.length) {
-        checkedFeatures.forEach(function (feature) {
-          if (element.offer.features.indexOf(feature.value) === -1) {
-            isFeatures = false;
-          }
-        });
+  FILTERS.addEventListener('change', window.debounce(function () {
+    updatePins();
+  }));
+
+  /**
+   * фильтрация пинов с последующей отрисовкой на странице пользователя
+   */
+  var updatePins = function () {
+
+    var someFilters = ads.filter(function (ad) {
+      if (Housing.TYPE.value === 'any') {
+        var type = true;
+      } else {
+        type = ad.offer.type === Housing.TYPE.value;
       }
-      if (houseType !== ANY) {
-        isType = element.offer.type === houseType;
+
+      if (Housing.ROOMS.value === 'any') {
+        var rooms = true;
+      } else {
+        rooms = ad.offer.rooms === Number(Housing.ROOMS.value);
       }
-      if (houseRooms !== ANY) {
-        isRooms = element.offer.rooms.toString() === houseRooms;
+
+      if (Housing.GUESTS.value === 'any') {
+        var guests = true;
+      } else {
+        guests = ad.offer.guests === Number(Housing.GUESTS.value);
       }
-      if (houseGuests !== ANY) {
-        isGuests = element.offer.guests.toString() === houseGuests;
+
+      if (Housing.PRICE.value === 'any') {
+        var price = true;
+      } else if (Housing.PRICE.value === 'middle') {
+        price = ad.offer.price >= FilterPrice.MIN && ad.offer.price <= FilterPrice.MAX;
+      } else if (Housing.PRICE.value === 'low') {
+        price = ad.offer.price < FilterPrice.MIN;
+      } else if (Housing.PRICE.value === 'high') {
+        price = ad.offer.price > FilterPrice.MAX;
       }
-      if (housePrice !== ANY) {
-        var elementPrice = element.offer.price.toString();
-        var price;
-        if (elementPrice < window.data.price.min) {
-          price = HousePriceValue.LOW;
-        }
-        if (elementPrice > window.data.price.max) {
-          price = HousePriceValue.HIGH;
-        }
-        if (elementPrice < window.data.price.max && elementPrice > window.data.price.min) {
-          price = HousePriceValue.MIDDLE;
-        }
-        isPrice = price === housePrice;
+
+      var selectedCheckBoxes = Housing.FEATURES.querySelectorAll('input[name="features"]:checked');
+
+      var checkedValues = Array.from(selectedCheckBoxes).map(function (it) {
+        return it.value;
+      });
+
+      var matchedFeatures = checkedValues.filter(function (it) {
+        return ad.offer.features.includes(it);
+      });
+
+      if (!checkedValues.length) {
+        var features = true;
+      } else {
+        features = matchedFeatures.length === checkedValues.length;
       }
-      return isType && isRooms && isGuests && isPrice && isFeatures;
-    };
-    render(loadedPins.filter(filteredArray));
-  });
+
+      return type && rooms && guests && price && features;
+    });
+
+    window.pins.render(someFilters);
+  };
+
+  /**
+   * полученние данных с сервера
+   * @param {Array} data - данные с сервера
+   */
+  var onSuccess = function (data) {
+    ads = data;
+    window.pin.render(data);
+  };
+
+  window.filter = onSuccess;
+
 })();

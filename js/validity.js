@@ -1,5 +1,5 @@
 'use strict';
-window.validity = (function () {
+(function () {
   var formElement = document.querySelector('.ad-form');
 
   var typeHousePrice = {
@@ -77,6 +77,8 @@ window.validity = (function () {
   var resetFormElements = function () {
     House.PRICE.placeholder = typeHousePrice ['flat'];
     House.PRICE.min = typeHousePrice ['flat'];
+    
+
   };
 
   formElement.addEventListener('submit', function () {
