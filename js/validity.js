@@ -77,14 +77,12 @@
   var resetFormElements = function () {
     House.PRICE.placeholder = typeHousePrice ['flat'];
     House.PRICE.min = typeHousePrice ['flat'];
-    
-
   };
 
-  formElement.addEventListener('submit', function () {
-    window.backend.save(fn1, onError, data);
-  });
+  // formElement.addEventListener('submit', function () {
+  // window.backend.save(fn1, onError, data);
+  // });
   window.validity = {
     reset: resetFormElements
-  }
+  };
 })();

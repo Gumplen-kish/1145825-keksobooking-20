@@ -81,9 +81,10 @@
    * Функция деактивации карты
    */
   var deActiveMap = function () {
-    pinMainElement.classList.add('ad-form--disabled');
+    formElement.classList.add('ad-form--disabled');
     fieldsetDisabled();
     window.validity.reset();
+    window.pins.remove();
     mapElement.classList.add('map--faded');
     pinMainElement.addEventListener('mousedown', onPressMouseLeft);
     pinMainElement.addEventListener('keydown', onPressKeyboardEnter);

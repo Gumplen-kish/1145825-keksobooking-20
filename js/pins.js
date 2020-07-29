@@ -157,10 +157,17 @@
     var pins = document.querySelector('.map__pins');
     pins.appendChild(pinsFragment);
   };
+  var removePins = function () {
+    var allPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    allPins.forEach(function (pin) {
+      pin.remove();
+    });
+  };
 
   window.pins = {
     render: renderPins,
     generatedOffers: getListOfOffers,
-    createOffer: createOffer
+    createOffer: createOffer,
+    remove: removePins
   };
 })();

@@ -5,6 +5,16 @@
     LOAD: 'https://javascript.pages.academy/keksobooking/data',
     POST: 'https://javascript.pages.academy/keksobooking'
   };
+  var StatusCode = {
+    OK: 200
+  };
+  var errorMessage = {
+    400: 'Неверный запрос',
+    401: 'Пользователь не авторизирован',
+    403: 'Доступ запрещен',
+    404: 'Ничего не найдено',
+    500: 'Внутренняя ошибка сервера'
+  };
 
   /**
    * Возвращает XHR объект
@@ -17,7 +27,7 @@
     xhr.responseType = 'json';
     xhr.timeout = TIMEOUT;
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
+      if (xhr.status === StatusCode.OK) {
         onSuccess(xhr.response);
       } else {
         onError('Cтатус ответа: : ' + xhr.status + ' ' + xhr.statusText);
@@ -57,6 +67,7 @@
 
   window.backend = {
     get: getData,
-    save: saveData
+    save: saveData,
+    errorMessage: errorMessage
   };
 })();

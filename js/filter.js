@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var FILTERS = document.querySelector('.map__filters');
+  var filtersElements = document.querySelectorAll('.map__filter');
   var ads = [];
   var FilterPrice = {
     MIN: 10000,
@@ -15,10 +15,11 @@
     PRICE: document.querySelector('#housing-price'),
     FEATURES: document.querySelector('#housing-features'),
   };
-
-  FILTERS.addEventListener('change', window.debounce(function () {
-    updatePins();
-  }));
+  filtersElements.forEach(function (select) {
+    select.addEventListener('change', window.debounce(function () {
+      updatePins();
+    }));
+  });
 
   /**
    * фильтрация пинов с последующей отрисовкой на странице пользователя
