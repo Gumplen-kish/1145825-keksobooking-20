@@ -1,91 +1,64 @@
 'use strict';
 
 (function () {
-  var filtersElements = document.querySelectorAll('.map__filter');
-  var ads = [];
-  var FilterPrice = {
-    MIN: 10000,
-    MAX: 50000,
+  var filterPrice = {
+    'low': {
+      start: 0,
+      end: 10000
+    },
+    'middle': {
+      start: 10000,
+      end: 50000
+    },
+    'high': {
+      start: 50000,
+      end: Infinity
+    }
   };
 
-  var Housing = {
-    TYPE: document.querySelector('#housing-type'),
-    ROOMS: document.querySelector('#housing-rooms'),
-    GUESTS: document.querySelector('#housing-guests'),
-    PRICE: document.querySelector('#housing-price'),
-    FEATURES: document.querySelector('#housing-features'),
-  };
-  filtersElements.forEach(function (select) {
-    select.addEventListener('change', window.debounce(function () {
-      updatePins();
-    }));
-  });
+  var filterItems = Array.from(document.querySelector('.map__filters').children);
 
-  /**
-   * фильтрация пинов с последующей отрисовкой на странице пользователя
-   */
-  var updatePins = function () {
+  var filterRules = {
+    'housing-type': function (data, filter) {
+      return filter.value === data.offer.type;
+    },
+    'housing-rooms': function (data, filter) {
+      return filter.value === data.offer.rooms.toString();
+    },
+    'housing-guests': function (data, filter) {
+      return filter.value === data.offer.guests.toString();
+    },
+    'housing-price': function (data, filter) {
+      return data.offer.price >= filterPrice[filter.value].start && data.offer.price < filterPrice[filter.value].end;
+    },
+    'housing-features': function (data, filter) {
+      var checkListItems = Array.from(filter.querySelectorAll('input[type="checkbox"]:checked'));
 
-    var someFilters = ads.filter(function (ad) {
-      if (Housing.TYPE.value === 'any') {
-        var type = true;
-      } else {
-        type = ad.offer.type === Housing.TYPE.value;
-      }
-
-      if (Housing.ROOMS.value === 'any') {
-        var rooms = true;
-      } else {
-        rooms = ad.offer.rooms === Number(Housing.ROOMS.value);
-      }
-
-      if (Housing.GUESTS.value === 'any') {
-        var guests = true;
-      } else {
-        guests = ad.offer.guests === Number(Housing.GUESTS.value);
-      }
-
-      if (Housing.PRICE.value === 'any') {
-        var price = true;
-      } else if (Housing.PRICE.value === 'middle') {
-        price = ad.offer.price >= FilterPrice.MIN && ad.offer.price <= FilterPrice.MAX;
-      } else if (Housing.PRICE.value === 'low') {
-        price = ad.offer.price < FilterPrice.MIN;
-      } else if (Housing.PRICE.value === 'high') {
-        price = ad.offer.price > FilterPrice.MAX;
-      }
-
-      var selectedCheckBoxes = Housing.FEATURES.querySelectorAll('input[name="features"]:checked');
-
-      var checkedValues = Array.from(selectedCheckBoxes).map(function (it) {
-        return it.value;
+      return checkListItems.every(function (checkListElement) {
+        return data.offer.features.some(function (feature) {
+          return feature === checkListElement.value;
+        });
       });
+    }
+  };
 
-      var matchedFeatures = checkedValues.filter(function (it) {
-        return ad.offer.features.includes(it);
-      });
-
-      if (!checkedValues.length) {
-        var features = true;
-      } else {
-        features = matchedFeatures.length === checkedValues.length;
+  var filterArray = function (array) {
+    var filterAds = [];
+    for (var i = 0; i < array.length; i++) {
+      var item = array[i];
+      if (filterItems.every(function (filterItem) {
+        return (filterItem.value === 'any') ? true : filterRules[filterItem.id](item, filterItem);
+      })) {
+        filterAds.push(item);
       }
-
-      return type && rooms && guests && price && features;
-    });
-
-    window.pins.render(someFilters);
+      if (!(filterAds.length < window.util.MAX_AMAUNT_ADS)) {
+        break;
+      }
+    }
+    return filterAds;
   };
 
-  /**
-   * полученние данных с сервера
-   * @param {Array} data - данные с сервера
-   */
-  var onSuccess = function (data) {
-    ads = data;
-    window.pin.render(data);
+  window.filter = {
+    getArray: filterArray
   };
-
-  window.filter = onSuccess;
-
 })();

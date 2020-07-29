@@ -1,36 +1,21 @@
 'use strict';
 (function () {
-  var TIMEOUT = 10000;
-  var Url = {
-    LOAD: 'https://javascript.pages.academy/keksobooking/data',
-    POST: 'https://javascript.pages.academy/keksobooking'
-  };
+  var URL_LOAD = 'https://javascript.pages.academy/keksobooking/data';
+  var URL_SAVE = 'https://javascript.pages.academy/keksobooking';
+  var TIMEOUT_IN_MS = 10000;
+
   var StatusCode = {
     OK: 200
   };
-  var errorMessage = {
-    400: 'Неверный запрос',
-    401: 'Пользователь не авторизирован',
-    403: 'Доступ запрещен',
-    404: 'Ничего не найдено',
-    500: 'Внутренняя ошибка сервера'
-  };
 
-  /**
-   * Возвращает XHR объект
-   * @param {Object} onSuccess - действия при получении данных с сервера
-   * @param {function} onError -
-   * @return {Object} - объект xhr
-   */
-  var settingXhr = function (onSuccess, onError) {
+  var loadData = function (onSuccess, onError, flag, data) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
-    xhr.timeout = TIMEOUT;
     xhr.addEventListener('load', function () {
       if (xhr.status === StatusCode.OK) {
         onSuccess(xhr.response);
       } else {
-        onError('Cтатус ответа: : ' + xhr.status + ' ' + xhr.statusText);
+        onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
     });
     xhr.addEventListener('error', function () {
@@ -39,35 +24,40 @@
     xhr.addEventListener('timeout', function () {
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
-    return xhr;
-  };
 
-  /**
-   * Функция, которая выполняет запрос к серверу
-   * @param {Object} onSuccess - действие при успешном запросе
-   * @param {Object} onError - действие при ошибке
-   */
-  var getData = function (onSuccess, onError) {
-    var xhr = settingXhr(onSuccess, onError);
-    xhr.open('GET', Url.LOAD);
-    xhr.send();
-  };
+    xhr.timeout = TIMEOUT_IN_MS;
 
+    if (flag) {
+      xhr.open('POST', URL_SAVE);
+      xhr.send(data);
+    } else {
+      xhr.open('GET', URL_LOAD);
+      xhr.send();
+    }
+
+  };
   /**
    * Функция отправки данных на сервер
-   * @param {Object} onSuccess - действие при успешной отправке
-   * @param {Object} onError - действие при ошибке
-   * @param {Object} data - обьект данных, который мы отправляем
+   * @param {Object} data - отправляемые данные
+   * @param {Function} onSuccess - функция, отрабатываемая при успешной загрузке
+   * @param {Function} onError - функция отрабатывает при возниковении ошибки
    */
-  var saveData = function (onSuccess, onError, data) {
-    var xhr = settingXhr(onSuccess, onError);
-    xhr.open('POST', Url.POST);
-    xhr.send(data);
+  var save = function (data, onSuccess, onError) {
+    loadData(onSuccess, onError, true, data);
+  };
+
+  /**
+   * Функция получения данных с сервера
+   * @param {Function} onSuccess - функция, отрабатываемая при успешной загрузке
+   * @param {Function} onError - функция отрабатывает при возниковении ошибки
+   */
+  var load = function (onSuccess, onError) {
+    loadData(onSuccess, onError);
   };
 
   window.backend = {
-    get: getData,
-    save: saveData,
-    errorMessage: errorMessage
+    load: load,
+    save: save
   };
 })();
+

@@ -1,32 +1,36 @@
 'use strict';
 (function () {
-  var PIN_MAIN = document.querySelector('.map__pin--main');
-  var addressInput = document.querySelector('#address');
 
-  var SizeMainPin = {
-    WIDTH: 65,
-    HEIGHT: 65,
-    TRIANGLE_HEIGHT: 22
+  var MAIN_MARK_SIZE = 65;
+  var MARK_ARROW_HEIGHT = 22;
+  var MAX_LEFT = -MAIN_MARK_SIZE / 2;
+  var MAX_RIGHT = 1200 - MAIN_MARK_SIZE / 2;
+  var MAX_TOP = 43;
+  var MAX_BOTTOM = 543;
+
+  /**
+  * получение адреса по координатам
+  */
+  var getAddress = function () {
+    var mainMark = document.querySelector('.map__pin--main');
+    var mainMarkX = parseInt(mainMark.style.left, 10);
+    var mainMarkY = parseInt(mainMark.style.top, 10);
+    var inputAddress = document.querySelector('#address');
+    inputAddress.value = Math.round(mainMarkX + MAIN_MARK_SIZE / 2) + ', ' + Math.round(mainMarkY + MAIN_MARK_SIZE + MARK_ARROW_HEIGHT);
   };
-  var SizeMap = {
-    WIDTH_LEFT: 0,
-    WIDTH_RIGHT: 1200,
-    HEIGHT_BOTTOM: 130,
-    HEIGHT_TOP: 630
-  };
 
-  addressInput.value = '575, 315';
+  var mainMark = document.querySelector('.map__pin--main');
 
-  var onPinMouseMove = function (evt) {
-    var mapPinMain = PIN_MAIN;
+  mainMark.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
+
     var startCoords = {
       x: evt.clientX,
       y: evt.clientY
     };
 
     /**
-     * Измененяет местоположение пина при движении мышью с зажатой клавишей
+     * Измененяет местоположение главного пина и адрес при движении мышью с зажатой клавишей
      * @param {Object} moveEvt событие при движении мышью
      */
     var onMouseMove = function (moveEvt) {
@@ -42,28 +46,11 @@
         y: moveEvt.clientY
       };
 
-      var xCoord = moveEvt.clientX;
-      var yCoord = moveEvt.clientY;
-      var xPointCoord = mapPinMain.offsetLeft - shift.x;
-      var yPointCoord = mapPinMain.offsetTop - shift.y;
-
-      if (xCoord >= SizeMap.WIDTH_RIGHT) {
-        mapPinMain.style.left = (SizeMap.WIDTH_RIGHT - Math.ceil(SizeMainPin.WIDTH / 2)) + 'px';
-      } else if (yCoord <= SizeMap.WIDTH_LEFT) {
-        mapPinMain.style.left = (SizeMap.WIDTH_LEFT - Math.ceil(SizeMainPin.WIDTH / 2)) + 'px';
-      } else {
-        mapPinMain.style.left = xPointCoord + 'px';
+      if (((mainMark.offsetLeft - shift.x) >= MAX_LEFT) && ((mainMark.offsetLeft - shift.x) <= MAX_RIGHT) && ((mainMark.offsetTop - shift.y) >= MAX_TOP) && ((mainMark.offsetTop - shift.y) <= MAX_BOTTOM)) {
+        mainMark.style.top = (mainMark.offsetTop - shift.y) + 'px';
+        mainMark.style.left = (mainMark.offsetLeft - shift.x) + 'px';
       }
-
-      if (yCoord >= SizeMap.HEIGHT_TOP) {
-        mapPinMain.style.top = (SizeMap.HEIGHT_TOP - SizeMainPin.HEIGHT - SizeMainPin.TRIANGLE_HEIGHT) + 'px';
-      } else if (yCoord <= SizeMap.HEIGHT_BOTTOM) {
-        mapPinMain.style.top = (SizeMap.HEIGHT_BOTTOM - SizeMainPin.HEIGHT - SizeMainPin.TRIANGLE_HEIGHT) + 'px';
-      } else {
-        mapPinMain.style.top = yPointCoord + 'px';
-      }
-
-      addressInput.value = xPointCoord + ', ' + yPointCoord;
+      getAddress();
     };
 
     /**
@@ -72,15 +59,16 @@
      */
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
+
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
-  };
+  });
 
   window.move = {
-    onPinMouse: onPinMouseMove
+    getAddress: getAddress
   };
 })();

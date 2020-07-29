@@ -1,8 +1,12 @@
+
 'use strict';
+
 (function () {
-  var DEBOUNCE_INTERVAL = 500;
+  var DEBOUNCE_INTERVAL = 500; // ms
+
   var debounce = function (cb) {
     var lastTimeout = null;
+
     return function () {
       var parameters = arguments;
       if (lastTimeout) {
@@ -14,6 +18,7 @@
     };
   };
 
-  window.debounce = debounce;
-
+  window.debounce = {
+    out: debounce
+  };
 })();

@@ -1,37 +1,51 @@
 'use strict';
+
 (function () {
+
   /**
-  * закрывает popup, удаляя button, удаляет обработчик события
-  */
-  var popupClose = function () {
-    var oldPopup = document.querySelector('.map__card');
-    oldPopup.remove();
-    document.removeEventListener('keydown', onPressEsc);
+    * закрывает popup
+    */
+  var closeCard = function () {
+    var mapCard = document.querySelector('.map__card');
+    mapCard.classList.add('hidden');
+    document.removeEventListener('keydown', onCardEscPress);
   };
 
   /**
-  * Вызывает функцию закрытия попапа при нажатии клавиши Esc
-  * @param {Object} evt - хранит в себе событие нажатия
+   * вызывает функцию при нажатии клавиши Enter
+   * @param {Object} evt - объект хранит последнее событие
   */
-  var onPressEsc = function (evt) {
-    if (evt.keyCode === 27) {
-      popupClose();
+  var onCardEscPress = function (evt) {
+    if (evt.key === 'Escape') {
+      closeCard();
     }
   };
 
+
   /**
-  * Вызывает функцию закрытия попапа при нажатии левой кнопкой мыши
-  * @param {Object} evt - хранит в себе событие нажатия
-  */
-  var onClosePopupLeft = function (evt) {
-    if (evt.button === 0) {
-      popupClose();
+   * функция открытия/закрытия popup
+   * @param {Object} item - объект карточки объявления
+   */
+  var openCard = function (item) {
+    var cardData = window.card.create(item);
+    var mapCard = document.querySelector('.map__card');
+    var mapFiltersContainer = document.querySelector('.map__filters-container');
+
+    if (!mapCard) {
+      mapFiltersContainer.before(cardData);
+    } else {
+      mapCard.replaceWith(cardData);
     }
+
+    var popupClose = document.querySelector('.popup__close');
+    popupClose.addEventListener('click', function () {
+      closeCard();
+    });
+    document.addEventListener('keydown', onCardEscPress);
   };
 
   window.popup = {
-    close: popupClose,
-    onCloseLeft: onClosePopupLeft,
-    onPressEsc: onPressEsc
+    openCard: openCard
   };
+
 })();
